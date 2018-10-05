@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./core/Home";
 import Users from "./user/Users";
-import Signup from "./user/Signup";
+import CreateUser from "./user/CreateUser";
 import Signin from "./auth/Signin";
 import EditProfile from "./user/EditProfile";
 import Profile from "./user/Profile";
 import PrivateRoute from "./auth/PrivateRoute";
+import LogEvent from "./user/LogEvent";
+import Events from "./user/Events";
 import Menu from "./core/Menu";
 import Footer from "./core/Footer";
 
@@ -26,10 +28,12 @@ class MainRouter extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/users" component={Users} />
-          <Route path="/signup" component={Signup} />
+          <Route path="/createuser" component={CreateUser} />
           <Route path="/signin" component={Signin} />
           <PrivateRoute path="/user/edit/:userId" component={EditProfile} />
           <Route path="/user/:userId" component={Profile} />
+          <Route path="/logEvent/:userId" component={LogEvent} />
+          <Route path="/events" component={Events} />
         </Switch>
         <Footer />
       </div>

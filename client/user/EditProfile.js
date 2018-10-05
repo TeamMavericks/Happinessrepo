@@ -10,6 +10,8 @@ import auth from "./../auth/auth-helper";
 import { read, update } from "./api-user.js";
 import { Redirect } from "react-router-dom";
 
+import { list } from "./api-user.js";
+
 const styles = theme => ({
   card: {
     maxWidth: 600,
@@ -63,6 +65,16 @@ class EditProfile extends Component {
         this.setState({ name: data.name, email: data.email });
       }
     });
+
+    list().then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        console.log(JSON.stringify(data))
+        this.setState({ users: data });
+      }
+    });
+
   };
   clickSubmit = () => {
     const jwt = auth.isAuthenticated();
