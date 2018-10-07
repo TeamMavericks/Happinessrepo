@@ -28,6 +28,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 5
   }),
   title: {
+    textAlign: "center",
     margin: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 2}px`,
     color: theme.palette.protectedTitle
   }

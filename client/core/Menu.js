@@ -55,22 +55,33 @@ const Menu = withRouter(({ history }) => (
   )}
 
   {
-    auth.isAuthenticated() && auth.isAuthenticated().user._id == "5b96f77232e2d14044b0458f"  && (
+    auth.isAuthenticated() && (auth.isAuthenticated().user.role == "Owner" || auth.isAuthenticated().user.role == "Admin")  && (
       <div style={styles.menuDiv}>
-      <Link to="/signup" style={styles.menuParent}>
-        <Button style={isActive(history, "/signup")}>Create User</Button>
+      <Link to="/createuser" style={styles.menuParent}>
+        <Button style={isActive(history, "/createuser")}>Create User</Button>
       </Link>
       <Link to="/users">
         <Button style={isActive(history, "/users")}>Users</Button>
       </Link>
       </div>
+  )}
 
+  {
+    auth.isAuthenticated() && auth.isAuthenticated().user.role == "Logger"  && (
+      <div style={styles.menuDiv}>
+      <Link to={"/logEvent/" + auth.isAuthenticated().user._id} style={styles.menuParent}>
+        <Button style={isActive(history, "/logEvent/" + auth.isAuthenticated().user._id)}>Log Event</Button>
+      </Link>
+      <Link to="/events" style={styles.menuParent}>
+        <Button style={isActive(history, "/events")}>Events</Button>
+      </Link>
+      </div>
   )}
 
   {
     auth.isAuthenticated() && (
       <div style={styles.menuDiv}>
-      <Link to={"/user/" + auth.isAuthenticated().user._id}>
+      <Link to={"/user/" + auth.isAuthenticated().user._id} style={styles.menuParent}>
         <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}>My Profile</Button>
       </Link>
       <Button color="inherit" onClick={() => {auth.signout(() => history.push('/'))}}>Sign out</Button>
