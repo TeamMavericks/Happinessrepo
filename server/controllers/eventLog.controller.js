@@ -24,7 +24,7 @@ const list = (req, res) => {
       });
     }
     res.json(eventLogs);
-  }).select("name");
+  })
 };
 
 export default {

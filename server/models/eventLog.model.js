@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const EventLogSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    trim: true,
+    required: "Name is required"
+  },
   meetingType: {
     type: String,
     trim: true,

@@ -43,8 +43,8 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 5
   }),
   title: {
-    margin: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 2}px`,
-    color: theme.palette.protectedTitle
+    margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
+    color: theme.palette.openTitle
   },
   card: {
     maxWidth: 600,
@@ -55,10 +55,6 @@ const styles = theme => ({
   },
   error: {
     verticalAlign: "middle"
-  },
-  title: {
-    marginTop: theme.spacing.unit * 2,
-    color: theme.palette.openTitle
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -100,6 +96,7 @@ class LogEvent extends Component {
       user: "",
       redirectToSignin: false,
 
+      name: "",
       meetingType: "",
       description: "",
 
@@ -131,9 +128,11 @@ class LogEvent extends Component {
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+    this.setState({ name: this.state.user.name });
   };
   clickSubmit = () => {
     const user = {
+      name: this.state.name || undefined,
       meetingType: this.state.meetingType || undefined,
       description: this.state.description || undefined
     };
@@ -141,14 +140,15 @@ class LogEvent extends Component {
       if (data.error) {
         this.setState({ error: data.error });
       } else {
-        console.log("dialogOpened");
         this.setState({ error: "", dialogOpen: true });
       }
     });
   };
-  togglePopup = () => {
-    this.state.dialogOpen = !this.state.dialogOpen;
-  };
+  resetState = () => {
+    this.setState({ meetingType: "" });
+    this.setState({ description: "" });
+    this.setState({ dialogOpen: !this.state.dialogOpen });
+  }
   render() {
     const { classes } = this.props;
 
@@ -158,7 +158,7 @@ class LogEvent extends Component {
       return <Redirect to="/signin" />;
     }
     return (
-      <div className={classes.root}>
+      <div>
       <Card className={classes.card}>
         <CardContent>
           <Typography
@@ -197,7 +197,7 @@ class LogEvent extends Component {
             id="description"
             label="Description"
             className={classes.textField}
-            value={this.state.user.description}
+            value={this.state.description}
             onChange={this.handleChange("description")}
             margin="normal"
           />
@@ -230,61 +230,18 @@ class LogEvent extends Component {
         </CardActions>
       </Card>
       <Dialog open={this.state.dialogOpen} disableBackdropClick={true}>
-        <DialogTitle>New Account</DialogTitle>
+        <DialogTitle>New Event Log</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            New account successfully created.
+            New event successfully logged.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button color="primary" autoFocus="autoFocus" variant="raised" onClick={console.log("HelloWorld"), this.togglePopup}>
-              Sign In
+            <Button color="primary" autoFocus="autoFocus" variant="raised" onClick={this.resetState}>
+              Close
             </Button>
         </DialogActions>
       </Dialog>
-
-
-
-
-
-
-        <Paper className={classes.root} elevation={4}>
-          <Typography type="title" className={classes.title}>
-            Log Event
-          </Typography>
-          <List dense>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <Person />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary={this.state.user.name}
-                secondary={this.state.user.email}
-              />{" "}
-              {auth.isAuthenticated().user &&
-                auth.isAuthenticated().user._id == this.state.user._id && (
-                  <ListItemSecondaryAction>
-                    <Link to={"/user/edit/" + this.state.user._id}>
-                      <IconButton aria-label="Edit" color="primary">
-                        <Edit />
-                      </IconButton>
-                    </Link>
-                    <DeleteUser userId={this.state.user._id} />
-                  </ListItemSecondaryAction>
-                )}
-            </ListItem>
-            <Divider />
-            <ListItem>
-              <ListItemText
-                primary={
-                  "Joined: " + new Date(this.state.user.created).toDateString()
-                }
-              />
-            </ListItem>
-          </List>
-        </Paper>
       </div>
     );
   }

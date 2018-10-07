@@ -15,13 +15,20 @@ import ArrowForward from "material-ui-icons/ArrowForward";
 import Person from "material-ui-icons/Person";
 import { Link } from "react-router-dom";
 import { list } from "./api-user-event-log.js";
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Collapse from '@material-ui/core/Collapse';
+import StarBorder from '@material-ui/icons/StarBorder';
+import Divider from "material-ui/Divider";
 
 const styles = theme => ({
   root: theme.mixins.gutters({
-    padding: theme.spacing.unit,
-    margin: theme.spacing.unit * 5
+    maxWidth: 600,
+    margin: "auto",
+    padding: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 5
   }),
   title: {
+    textAlign: "center",
     margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
     color: theme.palette.openTitle
   }
@@ -29,7 +36,8 @@ const styles = theme => ({
 
 class Events extends Component {
   state = {
-    users: []
+    users: [],
+    open: true
   };
 
   componentDidMount() {
@@ -37,6 +45,7 @@ class Events extends Component {
       if (data.error) {
         console.log(data.error);
       } else {
+        console.log(JSON.stringify(data));
         this.setState({ users: data });
       }
     });
@@ -47,26 +56,32 @@ class Events extends Component {
     return (
       <Paper className={classes.root} elevation={4}>
         <Typography type="title" className={classes.title}>
-          All Events
+          All Event Logs
         </Typography>
         <List dense>
           {this.state.users.map((item, i) => {
             return (
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <Person />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary={item.name} />
-                  <ListItemSecondaryAction>
-                    <IconButton>
-                      <ArrowForward />
-                    </IconButton>
-                  </ListItemSecondaryAction>
+              <div>
+              <Divider />
+              <Divider />
+              <Divider />
+              <Divider />
+              <Divider />
+                <ListItem button>
+                  <ListItemText primary={"Name: " + item.name} secondary={"Meeting Type: " + item.meetingType} />
                 </ListItem>
+                <Divider />
+                <ListItem>
+                  <ListItemText secondary={"Description: " + item.description} />
+                </ListItem>
+                </div>
             );
           })}
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
         </List>
       </Paper>
     );
