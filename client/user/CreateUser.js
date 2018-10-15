@@ -68,7 +68,7 @@ const roles = [
   },
 ];
 
-class Signup extends Component {
+class CreateUser extends Component {
   state = {
     name: "",
     password: "",
@@ -206,8 +206,8 @@ class Signup extends Component {
   }
 }
 
-Signup.propTypes = {
+CreateUser.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Signup);
+export default withStyles(styles)(CreateUser);

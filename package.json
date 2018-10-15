@@ -1,9 +1,8 @@
 {
-  "name": "mern-skeleton",
+  "name": "How.Is.It",
   "version": "1.0.0",
-  "description": "A MERN stack skeleton web application",
-  "author": "Shama Hoque",
-  "license": "MIT",
+  "description": "How.Is.It",
+  "author": "SDM Team 13",
   "keywords": [
     "react",
     "express",
@@ -13,9 +12,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/shamahoque/mern-skeleton.git"
+    "url": "https://github.com/TeamMavericks/Happinessrepo"
   },
-  "homepage": "https://github.com/shamahoque/mern-skeleton",
   "main": "./dist/server.generated.js",
   "scripts": {
     "development": "nodemon",
@@ -27,6 +25,8 @@
     "npm": "5.8.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/runtime": "^7.1.2",
     "babel-core": "^6.26.2",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",

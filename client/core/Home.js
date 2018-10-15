@@ -26,7 +26,7 @@ const styles = theme => ({
   },
   buttons: {
   },
-  signup: {
+  createuser: {
     margin: "auto",
     width: "50%"
   },
