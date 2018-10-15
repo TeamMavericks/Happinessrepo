@@ -1,28 +1,79 @@
 const Slack = require('node-slack');
 const cron = require('node-schedule');
 const express = require('express');
-var app = express();
-app.use(express.static('public'));
+const bodyParser = require('body-parser');
 
-app.get('/', onRequest);
+var app = express();
+app.use(express.static('public')); //Using  express and direct the app to get information in public folder
+
+app.get('/', onRequest);//app to get request 
+
+
+var notification = {
+	date: new Date().toUTCString(),
+	channel: 'slack',
+	userResponse: ''
+};
+
+// Use actual slack direct channel
+var user = {
+	slackDirectChannel: 'howisitnotofocations',
+	slackTeamChannel: 'groupChannel',
+	userName: 'Robson',
+	email: '',
+	mobile: '',
+	lastNotification: notification
+};
+
+var enrolments = {user1: user};
+
+app.use(bodyParser.json());
+app.post('/schedule_notifications', function(request, response){
+	var postData = request.body;
+	// Lookup user records and update with recieved response
+	var userId = postData.id;
+	var userDetails = enrolments[userId];
+	
+	if(userDetails)
+	{
+		// Update with received user response
+		var userResponse = postData.userResponse;
+		userDetails.lastNotification.userResponse = userResponse;
+		console.log(userResponse);
+
+		if(userResponse === 'accepted')
+		{
+			console.log("User accepted, scheduler starting...")	
+			startScheduler(userDetails.slackDirectChannel, userDetails.userName);
+		}
+	}
+	// Look up user's direct channel provided postData.userResponse === 'accepted'
+	// --- schedule notification using direct channel retrieved from user record
+
+	// postData.userResponse === 'rejected'
+	console.log(postData.id);
+});
 
 const hostname = '127.0.0.1';
 const portNumber = 8080;
 
 function onRequest (req, res) {
+	// 
 	res.send(__dirname + "/" + "index.html");
 }
 
-function startScheduler(){
+// Start the notification scheduler for the registered user identified by id from client call
+function startScheduler(slackChannel, userName){
 	var rule = new cron.RecurrenceRule();
 	rule.hour = 0.00;
 	rule.minute = 2;
+
 	cron.scheduleJob(rule, function() {
-		var slack = new Slack('https://sdm-infs809.slack.com/archives/GCANM77HC/p1537402442000100');
+		var slack = new Slack('');
 		slack.send({
 			text: 'Answer your Happiness Survey!',
-			channel: 'howisitnotofocations'
-			//username: 'Robson'
+			channel: slackChannel,
+			username: userName
 		});
 		console.log(new Date(), 'Notification sent to Slack channel.');
 	});

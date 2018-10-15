@@ -9,6 +9,8 @@ dnperm.addEventListener('click', function (e) {
 	} else {
 		Notification.requestPermission(function (p) {
 			if (p === 'denied') {
+				var userResponse = { "id": "user1", "userResponse": 'rejected' };
+				postToServer(userResponse);
 				alert('You have denied happiness notifications');
 			} else if (p === 'granted') {
 				notify = new Notification('Happiness Survey Notification', {
@@ -17,7 +19,10 @@ dnperm.addEventListener('click', function (e) {
 				});
 				// Post credentials of logged in user for server to process
 				//This hardcoded code must be removed once the user list is confirmed
-				window.open('https://sdm-infs809.slack.com/messages/DC9JYF57X/mentions/', '_blank');
+				var userResponse = { "id": "user1", "userResponse": 'accepted' };
+				postToServer(userResponse);
+
+				//window.open('https://sdm-infs809.slack.com/messages/DC9JYF57X/mentions/', '_blank');
 			}
 		});
 	}
@@ -30,3 +35,18 @@ dndecline.addEventListener('click', function (e) {
 
 	// Post user credentials for processing at server
 });
+
+function postToServer(userResponse) {
+	var xhr = new XMLHttpRequest();
+	var url = 'http://127.0.0.1:8080/schedule_notifications';
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status === 200) {
+			var json = JSON.parse(xhr.responseText);
+			console.log(json);
+		}
+	};
+	var data = JSON.stringify(userResponse);
+	xhr.send(data);
+}
