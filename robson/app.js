@@ -17,11 +17,11 @@ var notification = {
 
 // Use actual slack direct channel
 var user = {
-	slackDirectChannel: 'howisitnotofocations',
-	slackTeamChannel: 'groupChannel',
+	slackDirectChannel: 'https://hooks.slack.com/services/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',
+	slackTeamChannel: 'https://hooks.slack.com/services/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',
 	userName: 'Robson',
-	email: '',
-	mobile: '',
+	email: 'qhs8122@autuni.ac.nz',
+	mobile: '0064210593902',
 	lastNotification: notification
 };
 
@@ -69,7 +69,7 @@ function startScheduler(slackChannel, userName){
 	rule.minute = 2;
 
 	cron.scheduleJob(rule, function() {
-		var slack = new Slack('');
+		var slack = new Slack('https://hooks.slack.com/services/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');
 		slack.send({
 			text: 'Answer your Happiness Survey!',
 			channel: slackChannel,
