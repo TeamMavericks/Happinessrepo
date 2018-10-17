@@ -14,6 +14,7 @@ var enrolments = GetEnrolments();
 app.use(bodyParser.json());
 app.post('/schedule_notifications', function(request, response){
 	var postData = request.body;
+	console.log(postData);
 	// Lookup user records and update with recieved response
 	var userId = postData.id;
 	var userDetails = enrolments[userId];
