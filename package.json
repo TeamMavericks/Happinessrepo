@@ -18,7 +18,7 @@
   "scripts": {
     "development": "nodemon",
     "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
-    "start": "SET NODE_ENV=production & node ./dist/server.generated.js"
+    "start": "npm install & npm run development"
   },
   "engines": {
     "node": "8.11.1",
@@ -61,7 +61,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2"
   },
-   "bugs": {
+  "bugs": {
     "url": "https://github.com/TeamMavericks/Happinessrepo/issues"
   },
   "homepage": "https://github.com/TeamMavericks/Happinessrepo#readme",
