@@ -18,7 +18,7 @@
   "scripts": {
     "development": "nodemon",
     "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
-    "start": "npm install & npm run development"
+    "start": "npm install -g nodemon & npm install & npm run development"
   },
   "engines": {
     "node": "8.11.1",
