@@ -106,6 +106,13 @@ class Profile extends Component {
               }
             />
           </ListItem>
+          <ListItem>
+            <ListItemText
+              primary={
+                "Team Name: " + this.state.user.teamName
+              }
+            />
+          </ListItem>
         </List>
       </Paper>
     );

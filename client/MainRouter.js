@@ -4,6 +4,7 @@ import Home from "./core/Home";
 import Users from "./user/Users";
 import CreateUser from "./user/CreateUser";
 import Signin from "./auth/Signin";
+import SubmitHappiness from "./user/SubmitHappiness";
 import EditProfile from "./user/EditProfile";
 import Profile from "./user/Profile";
 import PrivateRoute from "./auth/PrivateRoute";
@@ -27,8 +28,9 @@ class MainRouter extends Component {
         <Menu />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/submitHappiness/:userId" component={SubmitHappiness} />
           <Route path="/users" component={Users} />
-          <Route path="/createuser" component={CreateUser} />
+          <Route path="/createUser" component={CreateUser} />
           <Route path="/signin" component={Signin} />
           <PrivateRoute path="/user/edit/:userId" component={EditProfile} />
           <Route path="/user/:userId" component={Profile} />

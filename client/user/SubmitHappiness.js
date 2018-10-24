@@ -23,7 +23,7 @@ import auth from "./../auth/auth-helper";
 import { read } from "./api-user.js";
 import { Redirect, Link } from "react-router-dom";
 
-import { create } from "./api-user-event-log.js";
+import { create } from "./api-user-submit-happiness.js";
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -74,22 +74,30 @@ const styles = theme => ({
   }
 });
 
-const meetingTypes = [
+const happinesssLevels = [
   {
-    value: 'Sprint Review',
-    label: 'Sprint Review',
+    value: 'Not At All Happy',
+    label: 'Not At All Happy',
   },
   {
-    value: 'Retrospective',
-    label: 'Retrospective',
+    value: 'Not So Happy',
+    label: 'Not So Happy',
   },
   {
-    value: "Sprint Planning",
-    label: "Sprint Planning",
+    value: "Neutral",
+    label: "Neutral",
+  },
+  {
+    value: "Happy",
+    label: "Happy",
+  },
+  {
+    value: "Very Happy",
+    label: "Very Happy",
   }
 ];
 
-class LogEvent extends Component {
+class SubmitHappiness extends Component {
   constructor({ match }) {
     super();
     this.state = {
@@ -97,9 +105,9 @@ class LogEvent extends Component {
       redirectToSignin: false,
 
       name: "",
-      meetingType: "",
       teamName: "",
-      description: "",
+      individualHappiness: "",
+      teamHappiness: "",
 
       dialogOpen: false
 
@@ -130,13 +138,14 @@ class LogEvent extends Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
     this.setState({ name: this.state.user.name });
+    this.setState({ teamName: this.state.user.teamName });
   };
   clickSubmit = () => {
     const user = {
       name: this.state.name || undefined,
-      meetingType: this.state.meetingType || undefined,
-      teamName: this.state.teamName || undefined,
-      description: this.state.description || undefined
+      teamName: this.state.name || undefined,
+      individualHappiness: this.state.teamHappiness || undefined,
+      teamHappiness: this.state.individualHappiness || undefined
     };
     create(user).then(data => {
       if (data.error) {
@@ -147,9 +156,8 @@ class LogEvent extends Component {
     });
   };
   resetState = () => {
-    this.setState({ meetingType: "" });
-    this.setState({ teamName: "" });
-    this.setState({ description: "" });
+    this.setState({ individualHappiness: "" });
+    this.setState({ teamHappiness: "" });
     this.setState({ dialogOpen: !this.state.dialogOpen });
   }
   render() {
@@ -169,21 +177,21 @@ class LogEvent extends Component {
             component="h2"
             className={classes.title}
           >
-            Log Event
+            Submit Happiness
           </Typography>
           <TextField
             select
-            id="meetingType"
-            type="meetingType"
-            label="Meeting Type"
+            id="individualHappiness"
+            type="individualHappiness"
+            label="Individual Happiness"
             className={classes.textField}
-            value={this.state.meetingType}
-            onChange={this.handleChange("meetingType")}
+            value={this.state.individualHappiness}
+            onChange={this.handleChange("individualHappiness")}
             margin="normal"
             InputProps={{startAdornment: <InputAdornment position="start">Select</InputAdornment>}}
             >
             {
-              meetingTypes.map(option => (
+              happinesssLevels.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                           {option.label}
                         </MenuItem>
@@ -191,40 +199,26 @@ class LogEvent extends Component {
             }
             </TextField>
           <br />
-          <div>
-          <label className={classes.textField, classes.textLabel}>
-          Team Name
-          </label>
-          <textarea
-            id="teamName"
-            label="Team Name"
+          <TextField
+            select
+            id="teamHappiness"
+            type="teamHappiness"
+            label="Team Happiness"
             className={classes.textField}
-            value={this.state.teamName}
-            onChange={this.handleChange("teamName")}
+            value={this.state.teamHappiness}
+            onChange={this.handleChange("teamHappiness")}
             margin="normal"
-          />
-          </div>
+            InputProps={{startAdornment: <InputAdornment position="start">Select</InputAdornment>}}
+            >
+            {
+              happinesssLevels.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+              ))
+            }
+            </TextField>
           <br />
-
-          <div>
-          <label className={classes.textField, classes.textLabel}>
-          Description
-          </label>
-          <textarea
-            id="description"
-            label="Description"
-            className={classes.textField}
-            value={this.state.description}
-            onChange={this.handleChange("description")}
-            margin="normal"
-          />
-          </div>
-          <br />
-
-
-
-
-
           {" "}
           {this.state.error && (
             <Typography component="p" color="error">
@@ -250,7 +244,7 @@ class LogEvent extends Component {
         <DialogTitle>New Event Log</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            New event successfully logged.
+            New submission successfully submitted.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -263,8 +257,8 @@ class LogEvent extends Component {
     );
   }
 }
-LogEvent.propTypes = {
+SubmitHappiness.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(LogEvent);
+export default withStyles(styles)(SubmitHappiness);

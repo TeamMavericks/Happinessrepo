@@ -67,12 +67,20 @@ class Events extends Component {
               <Divider />
               <Divider />
               <Divider />
-                <ListItem button>
-                  <ListItemText primary={"Name: " + item.name} secondary={"Meeting Type: " + item.meetingType} />
-                </ListItem>
-                <Divider />
                 <ListItem>
-                  <ListItemText secondary={"Description: " + item.description} />
+                  <ListItemText primary={"Name: " + item.name} />
+                </ListItem>
+                <ListItem>
+                  <ListItemText secondary={"Meeting Type: " + item.meetingType} />
+                </ListItem>
+                <ListItem>
+                  <ListItemText secondary={"Team Name: " + item.teamName} />
+                </ListItem>
+                <ListItem>
+                  <ListItemText secondary={"Timestamp: " + new Date(item.created).toString()} />
+                </ListItem>
+                <ListItem>
+                  <ListItemText econdary={"Description: " + item.description} />
                 </ListItem>
                 </div>
             );

@@ -74,6 +74,7 @@ class CreateUser extends Component {
     password: "",
     email: "",
     role: "",
+    teamName: "",
     open: false,
     error: ""
   };
@@ -87,7 +88,8 @@ class CreateUser extends Component {
       name: this.state.name || undefined,
       email: this.state.email || undefined,
       password: this.state.password || undefined,
-      role: this.state.role || undefined
+      role: this.state.role || undefined,
+      teamName: this.state.teamName || undefined
     };
     create(user).then(data => {
       if (data.error) {
@@ -159,12 +161,17 @@ class CreateUser extends Component {
                 ))
               }
               </TextField>
-
             <br />
-
-
-
-
+            <TextField
+              id="teamName"
+              type="teamName"
+              label="Team Name"
+              className={classes.textField}
+              value={this.state.teamName}
+              onChange={this.handleChange("teamName")}
+              margin="normal"
+            />
+            <br />
             {" "}
             {this.state.error && (
               <Typography component="p" color="error">

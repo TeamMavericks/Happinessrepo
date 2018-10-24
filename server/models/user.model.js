@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: "Role is required"
   },
+  teamName: {
+    type: String,
+    required: "Team name is required"
+  },
   salt: String,
   updated: Date,
   created: {

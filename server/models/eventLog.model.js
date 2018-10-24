@@ -11,10 +11,19 @@ const EventLogSchema = new mongoose.Schema({
     trim: true,
     required: "Meeting Type is required"
   },
+  teamName: {
+    type: String,
+    trim: true,
+    required: "Team Name is required"
+  },
   description: {
     type: String,
     trim: true,
     required: "Meeting Description is required"
+  },
+  created: {
+    type: Date,
+    default: Date.now
   }
 });
 
