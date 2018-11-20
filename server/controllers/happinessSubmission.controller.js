@@ -17,7 +17,7 @@ const create = (req, res, next) => {
 };
 
 const list = (req, res) => {
-  happinessSubmission.find((err, happinessSubmissions) => {
+  HappinessSubmission.find((err, happinessSubmissions) => {
     if (err) {
       return res.status(400).json({
         error: errorHandler.getErrorMessage(err)

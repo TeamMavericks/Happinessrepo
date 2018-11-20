@@ -5,6 +5,7 @@ import Users from "./user/Users";
 import CreateUser from "./user/CreateUser";
 import Signin from "./auth/Signin";
 import SubmitHappiness from "./user/SubmitHappiness";
+import HappinessSubmissions from "./user/HappinessSubmissions";
 import EditProfile from "./user/EditProfile";
 import Profile from "./user/Profile";
 import PrivateRoute from "./auth/PrivateRoute";
@@ -29,6 +30,7 @@ class MainRouter extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/submitHappiness/:userId" component={SubmitHappiness} />
+          <Route path="/happinessSubmissions" component={HappinessSubmissions} />
           <Route path="/users" component={Users} />
           <Route path="/createUser" component={CreateUser} />
           <Route path="/signin" component={Signin} />

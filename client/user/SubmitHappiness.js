@@ -241,7 +241,7 @@ class SubmitHappiness extends Component {
         </CardActions>
       </Card>
       <Dialog open={this.state.dialogOpen} disableBackdropClick={true}>
-        <DialogTitle>New Event Log</DialogTitle>
+        <DialogTitle>New Happiness Submission</DialogTitle>
         <DialogContent>
           <DialogContentText>
             New submission successfully submitted.

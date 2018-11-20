@@ -64,6 +64,15 @@ const Menu = withRouter(({ history }) => (
   )}
 
   {
+    auth.isAuthenticated() && (auth.isAuthenticated().user.role == "Researcher")  && (
+      <div style={styles.menuDiv}>
+      <Link to="/happinessSubmissions" style={styles.menuParent}>
+        <Button style={isActive(history, "/happinessSubmissions")}>Happiness Submissions</Button>
+      </Link>
+      </div>
+  )}
+
+  {
     auth.isAuthenticated() && (auth.isAuthenticated().user.role == "Owner" || auth.isAuthenticated().user.role == "Admin")  && (
       <div style={styles.menuDiv}>
       <Link to="/createUser" style={styles.menuParent}>
